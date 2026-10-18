@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>14-Day Food List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f3ec; --card:#ffffff; --ink:#2b2b2b; --muted:#7c7468;
+    --line:#ece4d6; --accent:#c0563b; --green:#2f6b4f;
+    --green-dark:#1f4a36; --chip:#f3eee4; --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);
+    color:#fff;padding:56px 20px 48px;text-align:center;position:relative;overflow:hidden;
+  }
+  header::after{
+    content:"";position:absolute;inset:auto -10% -60px -10%;height:140px;
+    background:radial-gradient(ellipse at center,rgba(255,255,255,.12),transparent 70%);
+  }
+  h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:700;
+    font-size:clamp(2rem,5vw,3rem);margin:0 0 10px;letter-spacing:-.5px;
+  }
+  header p{margin:0;opacity:.88;font-size:clamp(.95rem,2.5vw,1.05rem)}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .stats span{
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    padding:6px 14px;border-radius:999px;font-size:.82rem;font-weight:500;
+  }
+  .notice{max-width:1180px;margin:26px auto -14px;padding:0 20px}
+  .notice div{
+    background:#fff8e6;border:1px solid #f0e0b8;color:#7a5c1e;
+    padding:12px 16px;border-radius:12px;font-size:.88rem;
+  }
+  .days{
+    max-width:1180px;margin:0 auto;padding:36px 20px 60px;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px;
+  }
+  .day{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;box-shadow:0 1px 2px rgba(60,40,20,.04),0 10px 26px rgba(60,40,20,.05);
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .day-head{display:flex;align-items:baseline;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:12px}
+  .day-num{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:1.35rem;color:var(--green)}
+  .day-head small{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+  .meal{border-left:3px solid var(--line);padding-left:12px}
+  .meal.lunch{border-left-color:var(--accent)}
+  .meal.dinner{border-left-color:var(--green)}
+  .badge{
+    display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:8px;
+  }
+  .badge.lunch{background:#fbeae4;color:var(--accent)}
+  .badge.dinner{background:#e6f1eb;color:var(--green)}
+  .items{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0}
+  .items li{background:var(--chip);border-radius:999px;padding:4px 11px;font-size:.85rem}
+  .extras{
+    margin-top:2px;font-size:.8rem;color:var(--muted);background:#faf7f1;
+    border:1px dashed var(--line);border-radius:10px;padding:8px 11px;
+  }
+  .extras b{color:var(--ink);font-weight:600}
+  .toggle{
+    margin-top:12px;background:#f4faf6;border:1px solid #d8ebe1;border-radius:10px;
+    padding:7px 12px;color:var(--green);font:inherit;font-size:.82rem;font-weight:600;
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  }
+  .toggle:hover{background:#e8f4ee;border-color:var(--green)}
+  .panel{display:none;margin-top:10px}
+  .panel.open{display:block}
+  .giscus-slot{min-height:60px}
+  .giscus-slot .loading{font-size:.8rem;color:var(--muted);padding:10px 0}
+  footer{
+    text-align:center;padding:30px 20px 50px;color:var(--muted);font-size:.82rem;
+    border-top:1px solid var(--line);max-width:1180px;margin:0 auto;
+  }
+  @media print{
+    header{background:#fff;color:#000;padding:20px}
+    .toggle,.panel,.notice,footer{display:none}
+    .days{grid-template-columns:1fr 1fr;gap:12px}
+    .day{box-shadow:none;break-inside:avoid}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>14-Day Food List</h1>
+  <p>Lunch &amp; Dinner plan — open any meal to leave a suggestion</p>
+  <div class="stats">
+    <span>14 days</span>
+    <span>28 meals</span>
+    <span>Open for feedback</span>
+  </div>
+</header>
+
+<div class="notice">
+  <div>💬 Tap <b>Suggestions</b> under any meal to write a comment. Suggestions are public and saved on GitHub, so everyone can see them.</div>
+</div>
+
+<main class="days" id="days"></main>
+
+<footer>Made with care · 14-Day Food List</footer>
+
+<script>
+/* ============================================================
+   GISCUS SETTINGS
+   Only GISCUS_CATEGORY_ID must be replaced (see giscus.app).
+   ============================================================ */
+const GISCUS_REPO        = "Fahadbcd17/banglacom-food";
+const GISCUS_REPO_ID     = "R_kgDOVN_jHQ";
+const GISCUS_CATEGORY    = "General";
+const GISCUS_CATEGORY_ID = "PASTE_CATEGORY_ID_HERE";
+/* ============================================================ */
+
+const PLAN = [
+  { day:1,  lunch:["Chicken curry","Mixed vegetable","Salad","Plain rice"],
+            dinner:["Fish curry","Fried vegetable","Plain rice"],
+            extras:["Chopsticks","Plastic spoon","Disposable hand gloves","Tissues","1 piece of lemon"] },
+  { day:2,  lunch:["Chicken biriyani","Salad"],
+            dinner:["Lentil curry","Mashed potatoes","Fried egg","Red spinach (lal shak)","Plain rice"] },
+  { day:3,  lunch:["Duck curry","Mixed vegetables","Salad","Plain rice"],
+            dinner:["Fish curry","Mashed potatoes","Lentil curry","Plain rice"] },
+  { day:4,  lunch:["Chicken curry","Fried Botboli","Salad","Plain rice"],
+            dinner:["Khichuri","Duck bhuna","Fried egg","Salad"] },
+  { day:5,  lunch:["Cauliflower fish curry","Fried potatoes","Plain rice"],
+            dinner:["Chicken curry","Fried potato-cauliflower","Salad","Plain rice"] },
+  { day:6,  lunch:["Chicken biriyani","Salad"],
+            dinner:["Lentil curry","Mashed potatoes","Fried egg","Red spinach (lal shak)","Plain rice"] },
+  { day:7,  lunch:["Duck curry","Fried cabbage-potato","Salad","Plain rice"],
+            dinner:["Vegetable khichuri","Chicken bhuna","Salad"] },
+  { day:8,  lunch:["Chicken curry","Mixed vegetable","Salad","Plain rice"],
+            dinner:["Fish curry","Fried vegetable","Plain rice"] },
+  { day:9,  lunch:["Chicken biriyani","Salad"],
+            dinner:["Lentil curry","Mashed potatoes","Fried egg","Red spinach (lal shak)","Plain rice"] },
+  { day:10, lunch:["Duck curry","Mixed vegetables","Salad","Plain rice"],
+            dinner:["Fish curry","Mashed potatoes","Lentil curry","Plain rice"] },
+  { day:11, lunch:["Chicken curry","Fried Botboli","Salad","Plain rice"],
+            dinner:["Khichuri","Duck bhuna","Fried egg","Salad"] },
+  { day:12, lunch:["Cauliflower fish curry","Fried potatoes","Plain rice"],
+            dinner:["Chicken curry","Fried potato-cauliflower","Salad","Plain rice"] },
+  { day:13, lunch:["Chicken biriyani","Salad"],
+            dinner:["Lentil curry","Mashed potatoes","Fried egg","Red spinach (lal shak)","Plain rice"] },
+  { day:14, lunch:["Duck curry","Fried cabbage-potato","Salad","Plain rice"],
+            dinner:["Vegetable khichuri","Chicken bhuna","Salad"] }
+];
+
+const esc = s => String(s).replace(/[&<>"']/g, c => (
+  {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+));
+
+function mealBlock(dayNum, type, items){
+  const term = 'day-' + dayNum + '-' + type;
+  const label = type === 'lunch' ? 'Lunch' : 'Dinner';
+  return `
+    <div class="meal ${type}">
+      <span class="badge ${type}">${label}</span>
+      <ul class="items">${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+      <button class="toggle" type="button" data-term="${term}">💬 Suggestions</button>
+      <div class="panel">
+        <div class="giscus-slot" data-term="${term}"><div class="loading">Loading suggestions…</div></div>
+      </div>
+    </div>`;
+}
+
+document.getElementById('days').innerHTML = PLAN.map(d => `
+  <article class="day">
+    <div class="day-head">
+      <span class="day-num">Day ${d.day}</span>
+      <small>Lunch &amp; Dinner</small>
+    </div>
+    ${mealBlock(d.day, 'lunch', d.lunch)}
+    ${mealBlock(d.day, 'dinner', d.dinner)}
+    ${d.extras ? `<div class="extras"><b>Also pack:</b> ${d.extras.map(esc).join(' · ')}</div>` : ''}
+  </article>
+`).join('');
+
+function mountGiscus(slot){
+  if (slot.dataset.mounted) return;
+  slot.dataset.mounted = '1';
+  slot.innerHTML = '';
+
+  if (GISCUS_CATEGORY_ID.indexOf('PASTE') === 0) {
+    slot.innerHTML = '<div class="loading">Suggestion box is not configured yet.</div>';
+    return;
+  }
+
+  const s = document.createElement('script');
+  s.src = 'https://giscus.app/client.js';
+  const attrs = {
+    'data-repo': GISCUS_REPO,
+    'data-repo-id': GISCUS_REPO_ID,
+    'data-category': GISCUS_CATEGORY,
+    'data-category-id': GISCUS_CATEGORY_ID,
+    'data-mapping': 'specific',
+    'data-term': slot.dataset.term,
+    'data-strict': '1',
+    'data-reactions-enabled': '1',
+    'data-emit-metadata': '0',
+    'data-input-position': 'top',
+    'data-theme': 'light',
+    'data-lang': 'en',
+    'crossorigin': 'anonymous',
+    'async': 'true'
+  };
+  Object.keys(attrs).forEach(k => s.setAttribute(k, attrs[k]));
+  slot.appendChild(s);
+}
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.toggle');
+  if (!btn) return;
+  const panel = btn.nextElementSibling;
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    mountGiscus(panel.querySelector('.giscus-slot'));
+  }
+});
+</script>
+
+</body>
+</html>

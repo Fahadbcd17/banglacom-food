@@ -116,13 +116,12 @@
 
 <script>
 /* ============================================================
-   GISCUS SETTINGS
-   Only GISCUS_CATEGORY_ID must be replaced (see giscus.app).
+   GISCUS SETTINGS (Fully Configured)
    ============================================================ */
 const GISCUS_REPO        = "Fahadbcd17/banglacom-food";
 const GISCUS_REPO_ID     = "R_kgDOVN_jHQ";
 const GISCUS_CATEGORY    = "General";
-const GISCUS_CATEGORY_ID = "PASTE_CATEGORY_ID_HERE";
+const GISCUS_CATEGORY_ID = "DIC_kwDOVN_jHc4DI4SC";
 /* ============================================================ */
 
 const PLAN = [
@@ -192,11 +191,6 @@ function mountGiscus(slot){
   slot.dataset.mounted = '1';
   slot.innerHTML = '';
 
-  if (GISCUS_CATEGORY_ID.indexOf('PASTE') === 0) {
-    slot.innerHTML = '<div class="loading">Suggestion box is not configured yet.</div>';
-    return;
-  }
-
   const s = document.createElement('script');
   s.src = 'https://giscus.app/client.js';
   const attrs = {
@@ -204,7 +198,7 @@ function mountGiscus(slot){
     'data-repo-id': GISCUS_REPO_ID,
     'data-category': GISCUS_CATEGORY,
     'data-category-id': GISCUS_CATEGORY_ID,
-    'data-mapping': 'specific',
+    'data-mapping': 'specific', 
     'data-term': slot.dataset.term,
     'data-strict': '1',
     'data-reactions-enabled': '1',
